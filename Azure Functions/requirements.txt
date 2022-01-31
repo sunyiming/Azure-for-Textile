@@ -1,0 +1,10 @@
+# DO NOT include azure-functions-worker in this file
+# The Python Worker is managed by Azure Functions platform
+# Manually managing azure-functions-worker may cause unexpected issues
+
+azure-functions
+azure-storage-blob
+azure-cosmos
+azure-cosmosdb-table
+requests==2.27.1
+beautifulsoup4==4.10.0

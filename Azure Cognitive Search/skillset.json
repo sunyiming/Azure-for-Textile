@@ -1,0 +1,320 @@
+{
+    "@odata.context": "https://<YOUR SARECH SUBDOMAIN>.search.windows.net/$metadata#skillsets/$entity",
+    "@odata.etag": "\"0x8D9DEDC4EEABB2C\"",
+    "name": "cosmosdb-skillset",
+    "description": "Skillset created from the portal. skillsetName: cosmosdb-skillset; contentField: content; enrichmentGranularity: document; knowledgeStoreStorageAccount: symstorage4craper;",
+    "skills": [
+      {
+        "@odata.type": "#Microsoft.Skills.Text.V3.EntityRecognitionSkill",
+        "name": "#1",
+        "description": null,
+        "context": "/document/content",
+        "categories": [
+          "Product",
+          "Person",
+          "Quantity",
+          "Organization",
+          "Event",
+          "Skill",
+          "Location",
+          "PersonType",
+          "Address",
+          "DateTime"
+        ],
+        "defaultLanguageCode": "zh_chs",
+        "minimumPrecision": null,
+        "modelVersion": null,
+        "inputs": [
+          {
+            "name": "text",
+            "source": "/document/content"
+          },
+          {
+            "name": "languageCode",
+            "source": "/document/language"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "persons",
+            "targetName": "people"
+          },
+          {
+            "name": "organizations",
+            "targetName": "organizations"
+          },
+          {
+            "name": "locations",
+            "targetName": "locations"
+          },
+          {
+            "name": "quantities",
+            "targetName": "quantities"
+          },
+          {
+            "name": "dateTimes",
+            "targetName": "dateTimes"
+          },
+          {
+            "name": "personTypes",
+            "targetName": "personTypes"
+          },
+          {
+            "name": "events",
+            "targetName": "events"
+          },
+          {
+            "name": "products",
+            "targetName": "products"
+          },
+          {
+            "name": "skills",
+            "targetName": "skills"
+          },
+          {
+            "name": "addresses",
+            "targetName": "addresses"
+          }
+        ]
+      },
+      {
+        "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+        "name": "#2",
+        "description": null,
+        "context": "/document/content",
+        "defaultLanguageCode": "zh_chs",
+        "maxKeyPhraseCount": null,
+        "modelVersion": null,
+        "inputs": [
+          {
+            "name": "text",
+            "source": "/document/content"
+          },
+          {
+            "name": "languageCode",
+            "source": "/document/language"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "keyPhrases",
+            "targetName": "keyphrases"
+          }
+        ]
+      },
+      {
+        "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+        "name": "#3",
+        "description": null,
+        "context": "/document",
+        "defaultCountryHint": null,
+        "modelVersion": null,
+        "inputs": [
+          {
+            "name": "text",
+            "source": "/document/content"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "languageCode",
+            "targetName": "language"
+          }
+        ]
+      },
+      {
+        "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+        "name": "#5",
+        "description": null,
+        "context": "/document",
+        "inputs": [
+          {
+            "name": "title",
+            "source": "/document/title"
+          },
+          {
+            "name": "url",
+            "source": "/document/url"
+          },
+          {
+            "name": "image_filenames",
+            "source": "/document/image_filenames"
+          },
+          {
+            "name": "date",
+            "source": "/document/date"
+          },
+          {
+            "name": "content",
+            "source": "/document/content"
+          },
+          {
+            "name": "id",
+            "source": "/document/id"
+          },
+          {
+            "name": "rid",
+            "source": "/document/rid"
+          },
+          {
+            "name": "keyPhrases",
+            "source": "/document/content/keyphrases/*"
+          },
+          {
+            "name": "languageCode",
+            "source": "/document/language"
+          },
+          {
+            "name": "Entities",
+            "sourceContext": "/document/content/entities/*",
+            "inputs": [
+              {
+                "name": "Entity",
+                "source": "/document/content/entities/*/name"
+              },
+              {
+                "name": "EntityType",
+                "source": "/document/content/entities/*/type"
+              },
+              {
+                "name": "EntitySubType",
+                "source": "/document/content/entities/*/subType"
+              },
+              {
+                "name": "Url",
+                "source": "/document/content/entities/*/wikipediaUrl"
+              }
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "name": "output",
+            "targetName": "objectprojection"
+          }
+        ]
+      },
+      {
+        "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+        "name": "#6",
+        "description": null,
+        "context": "/document",
+        "inputs": [
+          {
+            "name": "title",
+            "source": "/document/title"
+          },
+          {
+            "name": "url",
+            "source": "/document/url"
+          },
+          {
+            "name": "date",
+            "source": "/document/date"
+          },
+          {
+            "name": "content",
+            "source": "/document/content"
+          },
+          {
+            "name": "id",
+            "source": "/document/id"
+          },
+          {
+            "name": "rid",
+            "source": "/document/rid"
+          },
+          {
+            "name": "EntityPeople",
+            "source": "/document/content/people/*"
+          },
+          {
+            "name": "EntityOrganizations",
+            "source": "/document/content/organizations/*"
+          },
+          {
+            "name": "EntityLocations",
+            "source": "/document/content/locations/*"
+          },
+          {
+            "name": "EntityQuantities",
+            "source": "/document/content/quantities/*"
+          },
+          {
+            "name": "EntityDateTimes",
+            "source": "/document/content/dateTimes/*"
+          },
+          {
+            "name": "EntityPersonTypes",
+            "source": "/document/content/personTypes/*"
+          },
+          {
+            "name": "EntityEvents",
+            "source": "/document/content/events/*"
+          },
+          {
+            "name": "EntityProducts",
+            "source": "/document/content/products/*"
+          },
+          {
+            "name": "EntitySkills",
+            "source": "/document/content/skills/*"
+          },
+          {
+            "name": "EntityAddresses",
+            "source": "/document/content/addresses/*"
+          },
+          {
+            "name": "keyPhrases",
+            "source": "/document/content/keyphrases/*"
+          },
+          {
+            "name": "languageCode",
+            "source": "/document/language"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "output",
+            "targetName": "tableprojection"
+          }
+        ]
+      }
+    ],
+    "cognitiveServices": {
+      "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
+      "key": "<YOUR KEY>"
+    },
+    "knowledgeStore": {
+      "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=symstorage4craper;AccountKey=koLqtZMMkfrv52AZk74UMCEF4HFs7qVuA53xEC5ZV0HZaYpIAOC+O66rxPsW4+ltjZPwoTeLbgm8+Eu6ilk9tA==;EndpointSuffix=core.windows.net",
+      "projections": [
+        {
+          "tables": [
+            {
+              "tableName": "cosmosdbskillsetDocument",
+              "referenceKeyName": null,
+              "generatedKeyName": "NewsId",
+              "source": "/document/tableprojection",
+              "sourceContext": null,
+              "inputs": []
+            }
+          ],
+          "objects": [
+            {
+              "storageContainer": "knowledge-store",
+              "referenceKeyName": null,
+              "generatedKeyName": "knowledge-storeKey",
+              "source": "/document/objectprojection",
+              "sourceContext": null,
+              "inputs": []
+            }
+          ],
+          "files": []
+        }
+      ],
+      "parameters": {
+        "synthesizeGeneratedKeyName": true
+      }
+    },
+    "encryptionKey": null
+  }
